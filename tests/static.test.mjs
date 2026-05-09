@@ -60,13 +60,11 @@ test("LINE app prompt includes a QR code asset", async () => {
   assert.ok(image.size > 0);
 });
 
-test("join flow uses official LINE add-friend button image", async () => {
+test("join flow does not show add-friend button in QR prompt", async () => {
   const html = await text("join/index.html");
   const script = await text("assets/js/join.js");
-  assert.match(html, /href="https:\/\/lin\.ee\/Z8UFsff"/);
-  assert.match(html, /src="https:\/\/scdn\.line-apps\.com\/n\/line_add_friends\/btn\/zh-Hant\.png"/);
-  assert.match(html, /alt="加入好友"/);
-  assert.match(html, /height="36"/);
-  assert.match(html, /border="0"/);
-  assert.match(script, /line-friend-button/);
+  assert.doesNotMatch(html, /line_add_friends\/btn\/zh-Hant\.png/);
+  assert.doesNotMatch(html, /id="manual-link"/);
+  assert.doesNotMatch(script, /或是點選下方按鈕/);
+  assert.doesNotMatch(script, /line-friend-button/);
 });

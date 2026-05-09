@@ -94,33 +94,6 @@ p {
   display: none;
 }
 
-.manual-link {
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 44px;
-  margin-top: 22px;
-  padding: 0 18px;
-  border-radius: 8px;
-  background: var(--line);
-  color: white;
-  font-weight: 700;
-  text-decoration: none;
-}
-
-.manual-link.line-friend-button {
-  min-height: 36px;
-  padding: 0;
-  background: transparent;
-  border-radius: 0;
-}
-
-.manual-link.line-friend-button img {
-  display: block;
-  height: 36px;
-  width: auto;
-}
-
 .status-panel.is-error h1,
 .status-panel.is-error p {
   color: var(--error);

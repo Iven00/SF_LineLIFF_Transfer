@@ -8,34 +8,23 @@ import { extractSourceFromSearch } from "./source.mjs";
   const statusMessage = document.querySelector("#status-message");
   const sourceLabel = document.querySelector("#source-label");
   const lineQrCode = document.querySelector("#line-qr-code");
-  const manualLink = document.querySelector("#manual-link");
 
   function setStatus(message) {
     statusMessage.textContent = message;
   }
 
-  function showAction({ title, message, href, label, isError = false, showQr = false, useLineButtonImage = false }) {
+  function showAction({ title, message, isError = false, showQr = false }) {
     statusPanel.classList.toggle("is-error", isError);
     statusPanel.classList.add("has-action");
     statusTitle.textContent = title;
     setStatus(message);
     lineQrCode.hidden = !showQr;
-    manualLink.href = href;
-    manualLink.classList.toggle("line-friend-button", useLineButtonImage);
-
-    if (!useLineButtonImage) {
-      manualLink.textContent = label;
-    }
-
-    manualLink.hidden = false;
   }
 
   function showError(message) {
     showAction({
       title: "流程暫時無法完成",
       message,
-      href: config.LINE_OA_URL || "https://lin.ee/Z8UFsff",
-      label: "前往 LINE 官方帳號",
       isError: true
     });
   }
@@ -93,18 +82,14 @@ import { extractSourceFromSearch } from "./source.mjs";
   function promptLineAppOpen() {
     showAction({
       title: "請用 LINE 開啟",
-      message: "請使用 LINE 掃描下方 QR Code。\n或是點選下方按鈕。",
-      href: config.LINE_OA_URL,
-      label: "加入好友",
-      showQr: true,
-      useLineButtonImage: true
+      message: "請使用 LINE 掃描下方 QR Code。",
+      showQr: true
     });
   }
 
   async function main() {
     try {
       validateConfig();
-      manualLink.href = config.LINE_OA_URL;
 
       const source = readSource();
       if (!source) {
