@@ -114,3 +114,5 @@ The frontend supports both QR entry styles:
 - LIFF URL state forwarding: `?liff.state=%3Fsource%3Dposter`
 
 Use the LIFF URLs for QR codes so most users open the flow inside the LINE app instead of the external browser login page.
+
+If the page is opened outside the LINE app and the user is not already logged in, the landing page shows a prompt instead of immediately starting LINE Login. The prompt tells the user to open the page in the LINE app or scan the QR code with LINE, and provides a `用 LINE 開啟` button.

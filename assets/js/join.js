@@ -1,8 +1,10 @@
+import { buildLiffOpenUrl, shouldPromptLineAppOpen } from "./line-open.mjs";
 import { extractSourceFromSearch } from "./source.mjs";
 
 (function () {
   const config = window.SF_LINE_TRANSFER_CONFIG || {};
   const statusPanel = document.querySelector(".status-panel");
+  const statusTitle = document.querySelector("#status-title");
   const statusMessage = document.querySelector("#status-message");
   const sourceLabel = document.querySelector("#source-label");
   const manualLink = document.querySelector("#manual-link");
@@ -11,11 +13,24 @@ import { extractSourceFromSearch } from "./source.mjs";
     statusMessage.textContent = message;
   }
 
-  function showError(message) {
-    statusPanel.classList.add("is-error");
-    document.querySelector("h1").textContent = "流程暫時無法完成";
+  function showAction({ title, message, href, label, isError = false }) {
+    statusPanel.classList.toggle("is-error", isError);
+    statusPanel.classList.add("has-action");
+    statusTitle.textContent = title;
     setStatus(message);
+    manualLink.href = href;
+    manualLink.textContent = label;
     manualLink.hidden = false;
+  }
+
+  function showError(message) {
+    showAction({
+      title: "流程暫時無法完成",
+      message,
+      href: config.LINE_OA_URL || "https://lin.ee/RbgiWMT",
+      label: "前往 LINE 官方帳號",
+      isError: true
+    });
   }
 
   function isPlaceholder(value) {
@@ -68,6 +83,15 @@ import { extractSourceFromSearch } from "./source.mjs";
     }
   }
 
+  function promptLineAppOpen(source) {
+    showAction({
+      title: "請用 LINE 開啟",
+      message: "請使用 LINE App 開啟此頁，或用 LINE 掃描 QRCode。這樣就不需要輸入 LINE 帳號密碼。",
+      href: buildLiffOpenUrl(config.LIFF_ID, source),
+      label: "用 LINE 開啟"
+    });
+  }
+
   async function main() {
     try {
       validateConfig();
@@ -86,6 +110,14 @@ import { extractSourceFromSearch } from "./source.mjs";
 
       setStatus("正在啟動 LINE 登入...");
       await liff.init({ liffId: config.LIFF_ID });
+
+      if (shouldPromptLineAppOpen({
+        isInClient: liff.isInClient(),
+        isLoggedIn: liff.isLoggedIn()
+      })) {
+        promptLineAppOpen(source);
+        return;
+      }
 
       if (!liff.isLoggedIn()) {
         setStatus("正在前往 LINE 登入...");

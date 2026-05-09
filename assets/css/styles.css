@@ -102,6 +102,10 @@ p {
   display: none;
 }
 
+.status-panel.has-action .loader {
+  display: none;
+}
+
 @keyframes spin {
   to {
     transform: rotate(360deg);
