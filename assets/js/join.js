@@ -102,7 +102,7 @@ import { extractSourceFromSearch } from "./source.mjs";
         console.warn(`Unknown source received: ${source}`);
       }
 
-      setStatus("正在啟動 LINE 登入...");
+      setStatus("正在啟動 山風 LINE 登入...");
       await liff.init({ liffId: config.LIFF_ID });
 
       if (shouldPromptLineAppOpen({
@@ -123,7 +123,7 @@ import { extractSourceFromSearch } from "./source.mjs";
 
       await saveJoinLog(profile, source);
 
-      setStatus("完成，正在前往 LINE 官方帳號...");
+      setStatus("完成，正在前往 山風 LINE 官方帳號...");
       window.location.replace(config.LINE_OA_URL);
     } catch (error) {
       console.error(error);
