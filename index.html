@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>LINE 加入好友導向</title>
+    <meta http-equiv="refresh" content="0; url=join/">
+    <script>
+      const target = new URL("join/", location.href);
+      target.search = location.search;
+      location.replace(target.href);
+    </script>
+  </head>
+  <body>
+    <p>正在前往 LINE 加入好友頁面...</p>
+  </body>
+</html>
