@@ -119,10 +119,8 @@ import { extractSourceFromSearch } from "./source.mjs";
         return;
       }
 
-      setStatus("正在取得 LINE 使用者資料...");
       const profile = await liff.getProfile();
 
-      setStatus("正在記錄加入來源...");
       await saveJoinLog(profile, source);
 
       setStatus("完成，正在前往 LINE 官方帳號...");
