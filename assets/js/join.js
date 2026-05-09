@@ -1,3 +1,5 @@
+import { extractSourceFromSearch } from "./source.mjs";
+
 (function () {
   const config = window.SF_LINE_TRANSFER_CONFIG || {};
   const statusPanel = document.querySelector(".status-panel");
@@ -21,8 +23,7 @@
   }
 
   function readSource() {
-    const params = new URLSearchParams(window.location.search);
-    const source = params.get("source") || "";
+    const source = extractSourceFromSearch(window.location.search);
     if (source) {
       localStorage.setItem("join_source", source);
       return source;

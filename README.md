@@ -8,7 +8,16 @@ GitHub Pages base:
 
 `https://iven00.github.io/SF_LineLIFF_Transfer/`
 
-Supported QR URLs:
+Recommended QR URLs:
+
+- `https://liff.line.me/2010021052-HtEE4Ehv?source=poster`
+- `https://liff.line.me/2010021052-HtEE4Ehv?source=card`
+- `https://liff.line.me/2010021052-HtEE4Ehv?source=mom_wang`
+- `https://liff.line.me/2010021052-HtEE4Ehv?source=mom_FB`
+- `https://liff.line.me/2010021052-HtEE4Ehv?source=mom_IG`
+- `https://liff.line.me/2010021052-HtEE4Ehv?source=mom_YT`
+
+GitHub Pages fallback URLs:
 
 - `https://iven00.github.io/SF_LineLIFF_Transfer/join?source=poster`
 - `https://iven00.github.io/SF_LineLIFF_Transfer/join?source=card`
@@ -91,3 +100,12 @@ npm test
 ```
 
 This checks the static route references, source values, OA URL, Apps Script Sheet ID, and expected sheet headers.
+
+## Source Parameter Handling
+
+The frontend supports both QR entry styles:
+
+- Direct GitHub Pages URL: `?source=poster`
+- LIFF URL state forwarding: `?liff.state=%3Fsource%3Dposter`
+
+Use the LIFF URLs for QR codes so most users open the flow inside the LINE app instead of the external browser login page.
