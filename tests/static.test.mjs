@@ -1,4 +1,4 @@
-import { readFile } from "node:fs/promises";
+import { readFile, stat } from "node:fs/promises";
 import { test } from "node:test";
 import assert from "node:assert/strict";
 
@@ -41,4 +41,14 @@ test("root page redirects into join route", async () => {
   const html = await text("index.html");
   assert.match(html, /url=join\//);
   assert.match(html, /location\.replace\(target\.href\)/);
+});
+
+test("LINE app prompt includes a QR code asset", async () => {
+  const html = await text("join/index.html");
+  assert.match(html, /id="line-qr-code"/);
+  assert.match(html, /\.\.\/assets\/img\/line-qr-poster\.png/);
+
+  const image = await stat(new URL("../assets/img/line-qr-poster.png", import.meta.url));
+  assert.equal(image.isFile(), true);
+  assert.ok(image.size > 0);
 });

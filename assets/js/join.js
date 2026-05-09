@@ -7,17 +7,19 @@ import { extractSourceFromSearch } from "./source.mjs";
   const statusTitle = document.querySelector("#status-title");
   const statusMessage = document.querySelector("#status-message");
   const sourceLabel = document.querySelector("#source-label");
+  const lineQrCode = document.querySelector("#line-qr-code");
   const manualLink = document.querySelector("#manual-link");
 
   function setStatus(message) {
     statusMessage.textContent = message;
   }
 
-  function showAction({ title, message, href, label, isError = false }) {
+  function showAction({ title, message, href, label, isError = false, showQr = false }) {
     statusPanel.classList.toggle("is-error", isError);
     statusPanel.classList.add("has-action");
     statusTitle.textContent = title;
     setStatus(message);
+    lineQrCode.hidden = !showQr;
     manualLink.href = href;
     manualLink.textContent = label;
     manualLink.hidden = false;
@@ -86,9 +88,10 @@ import { extractSourceFromSearch } from "./source.mjs";
   function promptLineAppOpen(source) {
     showAction({
       title: "請用 LINE 開啟",
-      message: "請使用 LINE App 開啟此頁，或用 LINE 掃描 QRCode。這樣就不需要輸入 LINE 帳號密碼。",
+      message: "請使用 LINE App 開啟此頁，或用 LINE 掃描下方 QR Code。這樣就不需要輸入 LINE 帳號密碼。",
       href: buildLiffOpenUrl(config.LIFF_ID, source),
-      label: "用 LINE 開啟"
+      label: "用 LINE 開啟",
+      showQr: true
     });
   }
 
