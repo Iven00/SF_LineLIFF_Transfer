@@ -1,4 +1,4 @@
-import { buildLiffOpenUrl, shouldPromptLineAppOpen } from "./line-open.mjs";
+import { buildLineAppUrl, shouldPromptLineAppOpen } from "./line-open.mjs";
 import { extractSourceFromSearch } from "./source.mjs";
 
 (function () {
@@ -88,8 +88,8 @@ import { extractSourceFromSearch } from "./source.mjs";
   function promptLineAppOpen(source) {
     showAction({
       title: "請用 LINE 開啟",
-      message: "請使用 LINE App 開啟此頁，或用 LINE 掃描下方 QR Code。這樣就不需要輸入 LINE 帳號密碼。",
-      href: buildLiffOpenUrl(config.LIFF_ID, source),
+      message: "請使用 LINE 掃描下方 QR Code。 或是點選下方按鈕。",
+      href: buildLineAppUrl(config.LIFF_ID, source),
       label: "用 LINE 開啟",
       showQr: true
     });
