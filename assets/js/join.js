@@ -114,7 +114,7 @@ import { extractSourceFromSearch } from "./source.mjs";
       }
 
       if (!liff.isLoggedIn()) {
-        setStatus("正在前往 LINE 登入...");
+        setStatus("正在前往 山風 LINE 登入...");
         liff.login({ redirectUri: window.location.href });
         return;
       }
