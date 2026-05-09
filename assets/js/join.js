@@ -88,7 +88,7 @@ import { extractSourceFromSearch } from "./source.mjs";
   function promptLineAppOpen(source) {
     showAction({
       title: "請用 LINE 開啟",
-      message: "請使用 LINE 掃描下方 QR Code。 或是點選下方按鈕。",
+      message: "請使用 LINE 掃描下方 QR Code。\n或是點選下方按鈕。",
       href: buildLineAppUrl(config.LIFF_ID, source),
       label: "用 LINE 開啟",
       showQr: true
