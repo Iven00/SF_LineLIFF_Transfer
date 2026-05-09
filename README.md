@@ -49,14 +49,19 @@ The Apps Script writes to a sheet tab named `join_logs` with these columns:
 
 Apps Script Web App URL:
 
-`https://script.google.com/macros/s/AKfycby07AU7Ben8e5GFdpH-nrKcHtFgm-POApnb_5UAkvuVcfI2unjbInEy86To8qL0yRgF/exec`
+`https://script.google.com/macros/s/AKfycbwolutr-KuH2ZckisIld7YaRSJrYEcqBREgv1cpnJiCG0diAu1wpkSUcbcz6vqsKHofcg/exec`
 
 1. Open Google Apps Script.
 2. Create a new project.
 3. Copy `apps-script/Code.gs` into the project.
-4. Deploy as a Web App.
-5. Set access to allow the web app to receive requests from the landing page.
-6. Copy the Web App URL.
+4. Save the script.
+5. Deploy as a Web App.
+6. Set access to allow the web app to receive requests from the landing page.
+7. Copy the Web App URL.
+
+Important: the deployed `doPost` must return JSON like `{"ok":true}`. If Apps Script returns plain text such as `資料接收成功！`, the landing page will show a JSON parse error.
+
+After editing Apps Script, deploy a new version. Saving the script alone does not update the active Web App deployment.
 
 ### 2. Create LIFF App
 
@@ -81,7 +86,7 @@ Edit `assets/js/config.js`:
 ```javascript
 window.SF_LINE_TRANSFER_CONFIG = {
   LIFF_ID: "2010021052-HtEE4Ehv",
-  APPS_SCRIPT_WEB_APP_URL: "https://script.google.com/macros/s/AKfycby07AU7Ben8e5GFdpH-nrKcHtFgm-POApnb_5UAkvuVcfI2unjbInEy86To8qL0yRgF/exec",
+  APPS_SCRIPT_WEB_APP_URL: "https://script.google.com/macros/s/AKfycbwolutr-KuH2ZckisIld7YaRSJrYEcqBREgv1cpnJiCG0diAu1wpkSUcbcz6vqsKHofcg/exec",
   LINE_OA_URL: "https://lin.ee/RbgiWMT",
   ALLOWED_SOURCES: ["poster", "card", "mom_wang", "mom_FB", "mom_IG", "mom_YT"]
 };

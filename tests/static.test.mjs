@@ -30,6 +30,13 @@ test("Apps Script targets the confirmed spreadsheet and sheet", async () => {
   }
 });
 
+test("Apps Script Web App returns JSON for frontend response parsing", async () => {
+  const script = await text("apps-script/Code.gs");
+  assert.match(script, /return json_\(\{ ok: true \}\)/);
+  assert.match(script, /ContentService\.MimeType\.JSON/);
+  assert.doesNotMatch(script, /資料接收成功/);
+});
+
 test("root page redirects into join route", async () => {
   const html = await text("index.html");
   assert.match(html, /url=join\//);
