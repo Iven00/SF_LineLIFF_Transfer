@@ -21,17 +21,9 @@ import { extractSourceFromSearch } from "./source.mjs";
     setStatus(message);
     lineQrCode.hidden = !showQr;
     manualLink.href = href;
-    manualLink.textContent = "";
     manualLink.classList.toggle("line-friend-button", useLineButtonImage);
 
-    if (useLineButtonImage) {
-      const image = document.createElement("img");
-      image.src = "https://scdn.line-apps.com/n/line_add_friends/btn/zh-Hant.png";
-      image.alt = label;
-      image.height = 36;
-      image.border = 0;
-      manualLink.appendChild(image);
-    } else {
+    if (!useLineButtonImage) {
       manualLink.textContent = label;
     }
 

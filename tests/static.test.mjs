@@ -13,6 +13,13 @@ test("join page loads LIFF SDK and app scripts", async () => {
   assert.match(html, /\.\.\/assets\/js\/join\.js/);
 });
 
+test("join page cache-busts local static assets", async () => {
+  const html = await text("join/index.html");
+  assert.match(html, /\.\.\/assets\/css\/styles\.css\?v=/);
+  assert.match(html, /\.\.\/assets\/js\/config\.js\?v=/);
+  assert.match(html, /\.\.\/assets\/js\/join\.js\?v=/);
+});
+
 test("configuration includes confirmed OA URL and source values", async () => {
   const config = await text("assets/js/config.js");
   for (const source of ["poster", "card", "mom_wang", "mom_FB", "mom_IG", "mom_YT"]) {
@@ -54,7 +61,12 @@ test("LINE app prompt includes a QR code asset", async () => {
 });
 
 test("join flow uses official LINE add-friend button image", async () => {
+  const html = await text("join/index.html");
   const script = await text("assets/js/join.js");
-  assert.match(script, /line_add_friends\/btn\/zh-Hant\.png/);
+  assert.match(html, /href="https:\/\/lin\.ee\/Z8UFsff"/);
+  assert.match(html, /src="https:\/\/scdn\.line-apps\.com\/n\/line_add_friends\/btn\/zh-Hant\.png"/);
+  assert.match(html, /alt="加入好友"/);
+  assert.match(html, /height="36"/);
+  assert.match(html, /border="0"/);
   assert.match(script, /line-friend-button/);
 });
