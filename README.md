@@ -47,14 +47,19 @@ The Apps Script writes to a sheet tab named `join_logs` with these columns:
 
 ### 2. Create LIFF App
 
+LIFF ID:
+
+`2010021052-HtEE4Ehv`
+
+LIFF URL:
+
+`https://liff.line.me/2010021052-HtEE4Ehv`
+
 1. Open LINE Developers Console.
 2. Create or open the provider and channel for the LINE official account.
-3. Create a LIFF app.
-4. Set the endpoint URL to:
+3. Confirm the LIFF app endpoint URL is:
 
    `https://iven00.github.io/SF_LineLIFF_Transfer/join/`
-
-5. Copy the LIFF ID.
 
 ### 3. Update Frontend Config
 
@@ -62,7 +67,7 @@ Edit `assets/js/config.js`:
 
 ```javascript
 window.SF_LINE_TRANSFER_CONFIG = {
-  LIFF_ID: "your-liff-id",
+  LIFF_ID: "2010021052-HtEE4Ehv",
   APPS_SCRIPT_WEB_APP_URL: "your-apps-script-web-app-url",
   LINE_OA_URL: "https://lin.ee/RbgiWMT",
   ALLOWED_SOURCES: ["poster", "card", "mom_wang", "mom_FB", "mom_IG", "mom_YT"]
