@@ -1,4 +1,4 @@
-import { buildLineAppUrl, shouldPromptLineAppOpen } from "./line-open.mjs";
+import { shouldPromptLineAppOpen } from "./line-open.mjs";
 import { extractSourceFromSearch } from "./source.mjs";
 
 (function () {
@@ -14,14 +14,27 @@ import { extractSourceFromSearch } from "./source.mjs";
     statusMessage.textContent = message;
   }
 
-  function showAction({ title, message, href, label, isError = false, showQr = false }) {
+  function showAction({ title, message, href, label, isError = false, showQr = false, useLineButtonImage = false }) {
     statusPanel.classList.toggle("is-error", isError);
     statusPanel.classList.add("has-action");
     statusTitle.textContent = title;
     setStatus(message);
     lineQrCode.hidden = !showQr;
     manualLink.href = href;
-    manualLink.textContent = label;
+    manualLink.textContent = "";
+    manualLink.classList.toggle("line-friend-button", useLineButtonImage);
+
+    if (useLineButtonImage) {
+      const image = document.createElement("img");
+      image.src = "https://scdn.line-apps.com/n/line_add_friends/btn/zh-Hant.png";
+      image.alt = label;
+      image.height = 36;
+      image.border = 0;
+      manualLink.appendChild(image);
+    } else {
+      manualLink.textContent = label;
+    }
+
     manualLink.hidden = false;
   }
 
@@ -29,7 +42,7 @@ import { extractSourceFromSearch } from "./source.mjs";
     showAction({
       title: "流程暫時無法完成",
       message,
-      href: config.LINE_OA_URL || "https://lin.ee/RbgiWMT",
+      href: config.LINE_OA_URL || "https://lin.ee/Z8UFsff",
       label: "前往 LINE 官方帳號",
       isError: true
     });
@@ -85,13 +98,14 @@ import { extractSourceFromSearch } from "./source.mjs";
     }
   }
 
-  function promptLineAppOpen(source) {
+  function promptLineAppOpen() {
     showAction({
       title: "請用 LINE 開啟",
       message: "請使用 LINE 掃描下方 QR Code。\n或是點選下方按鈕。",
-      href: buildLineAppUrl(config.LIFF_ID, source),
-      label: "用 LINE 開啟",
-      showQr: true
+      href: config.LINE_OA_URL,
+      label: "加入好友",
+      showQr: true,
+      useLineButtonImage: true
     });
   }
 
@@ -118,7 +132,7 @@ import { extractSourceFromSearch } from "./source.mjs";
         isInClient: liff.isInClient(),
         isLoggedIn: liff.isLoggedIn()
       })) {
-        promptLineAppOpen(source);
+        promptLineAppOpen();
         return;
       }
 

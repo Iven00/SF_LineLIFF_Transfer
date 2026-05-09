@@ -18,7 +18,7 @@ test("configuration includes confirmed OA URL and source values", async () => {
   for (const source of ["poster", "card", "mom_wang", "mom_FB", "mom_IG", "mom_YT"]) {
     assert.match(config, new RegExp(`"${source}"`));
   }
-  assert.match(config, /https:\/\/lin\.ee\/RbgiWMT/);
+  assert.match(config, /https:\/\/lin\.ee\/Z8UFsff/);
 });
 
 test("Apps Script targets the confirmed spreadsheet and sheet", async () => {
@@ -51,4 +51,10 @@ test("LINE app prompt includes a QR code asset", async () => {
   const image = await stat(new URL("../assets/img/line-qr-poster.png", import.meta.url));
   assert.equal(image.isFile(), true);
   assert.ok(image.size > 0);
+});
+
+test("join flow uses official LINE add-friend button image", async () => {
+  const script = await text("assets/js/join.js");
+  assert.match(script, /line_add_friends\/btn\/zh-Hant\.png/);
+  assert.match(script, /line-friend-button/);
 });

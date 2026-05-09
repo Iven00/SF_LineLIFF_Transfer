@@ -108,6 +108,19 @@ p {
   text-decoration: none;
 }
 
+.manual-link.line-friend-button {
+  min-height: 36px;
+  padding: 0;
+  background: transparent;
+  border-radius: 0;
+}
+
+.manual-link.line-friend-button img {
+  display: block;
+  height: 36px;
+  width: auto;
+}
+
 .status-panel.is-error h1,
 .status-panel.is-error p {
   color: var(--error);
