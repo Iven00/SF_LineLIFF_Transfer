@@ -1,4 +1,4 @@
-import { shouldPromptLineAppOpen } from "./line-open.mjs";
+import { buildQrCodeImageUrl, shouldPromptLineAppOpen } from "./line-open.mjs";
 import { extractSourceFromSearch } from "./source.mjs";
 
 (function () {
@@ -79,7 +79,10 @@ import { extractSourceFromSearch } from "./source.mjs";
     }
   }
 
-  function promptLineAppOpen() {
+  function promptLineAppOpen(source) {
+    lineQrCode.src = buildQrCodeImageUrl(config.LIFF_ID, source);
+    lineQrCode.alt = `使用 LINE 掃描 QR Code 開啟山風加入流程，來源：${source}`;
+
     showAction({
       title: "請用 LINE 開啟",
       message: "請使用 LINE 掃描下方 QR Code。",
@@ -109,7 +112,7 @@ import { extractSourceFromSearch } from "./source.mjs";
         isInClient: liff.isInClient(),
         isLoggedIn: liff.isLoggedIn()
       })) {
-        promptLineAppOpen();
+        promptLineAppOpen(source);
         return;
       }
 
