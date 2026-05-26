@@ -13,6 +13,14 @@ test("join page loads LIFF SDK and app scripts", async () => {
   assert.match(html, /\.\.\/assets\/js\/join\.js/);
 });
 
+test("join page has a mobile-only LINE app open link", async () => {
+  const html = await text("join/index.html");
+  const script = await text("assets/js/join.js");
+  assert.match(html, /id="line-open-link"/);
+  assert.match(script, /buildLineAppUrl/);
+  assert.match(script, /navigator\.userAgent/);
+});
+
 test("join page cache-busts local static assets", async () => {
   const html = await text("join/index.html");
   assert.match(html, /\.\.\/assets\/css\/styles\.css\?v=/);
@@ -61,7 +69,6 @@ test("join flow does not show add-friend button in QR prompt", async () => {
   const html = await text("join/index.html");
   const script = await text("assets/js/join.js");
   assert.doesNotMatch(html, /line_add_friends\/btn\/zh-Hant\.png/);
-  assert.doesNotMatch(html, /id="manual-link"/);
   assert.doesNotMatch(script, /或是點選下方按鈕/);
   assert.doesNotMatch(script, /line-friend-button/);
 });

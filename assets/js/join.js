@@ -1,4 +1,9 @@
-import { buildQrCodeImageUrl, shouldPromptLineAppOpen } from "./line-open.mjs";
+import {
+  buildLineAppUrl,
+  buildQrCodeImageUrl,
+  isMobileUserAgent,
+  shouldPromptLineAppOpen
+} from "./line-open.mjs";
 import { extractSourceFromSearch } from "./source.mjs";
 
 (function () {
@@ -8,17 +13,19 @@ import { extractSourceFromSearch } from "./source.mjs";
   const statusMessage = document.querySelector("#status-message");
   const sourceLabel = document.querySelector("#source-label");
   const lineQrCode = document.querySelector("#line-qr-code");
+  const lineOpenLink = document.querySelector("#line-open-link");
 
   function setStatus(message) {
     statusMessage.textContent = message;
   }
 
-  function showAction({ title, message, isError = false, showQr = false }) {
+  function showAction({ title, message, isError = false, showQr = false, showLineOpen = false }) {
     statusPanel.classList.toggle("is-error", isError);
     statusPanel.classList.add("has-action");
     statusTitle.textContent = title;
     setStatus(message);
     lineQrCode.hidden = !showQr;
+    lineOpenLink.hidden = !showLineOpen;
   }
 
   function showError(message) {
@@ -79,15 +86,34 @@ import { extractSourceFromSearch } from "./source.mjs";
     }
   }
 
-  function promptLineAppOpen(source) {
+  function promptDesktopQrCode(source) {
     lineQrCode.src = buildQrCodeImageUrl(config.LIFF_ID, source);
-    lineQrCode.alt = `使用 LINE 掃描 QR Code 開啟山風加入流程，來源：${source}`;
+    lineQrCode.alt = `使用 LINE 掃描此 QR Code 開啟加入好友流程，來源：${source}`;
 
     showAction({
       title: "請用 LINE 開啟",
       message: "請使用 LINE 掃描下方 QR Code。",
       showQr: true
     });
+  }
+
+  function promptMobileLineAppOpen(source) {
+    lineOpenLink.href = buildLineAppUrl(config.LIFF_ID, source);
+
+    showAction({
+      title: "請用 LINE 開啟",
+      message: "請點選下方按鈕，用 LINE 開啟山風加入流程。",
+      showLineOpen: true
+    });
+  }
+
+  function promptLineAppOpen(source) {
+    if (isMobileUserAgent(navigator.userAgent)) {
+      promptMobileLineAppOpen(source);
+      return;
+    }
+
+    promptDesktopQrCode(source);
   }
 
   async function main() {

@@ -16,3 +16,12 @@ export function buildQrCodeImageUrl(liffId, source) {
   url.searchParams.set("data", buildLiffOpenUrl(liffId, source));
   return url.href;
 }
+
+export function isMobileUserAgent(userAgent) {
+  return /Android|iPhone|iPad|iPod|Mobile|FBAN|FBAV|FB_IAB|Instagram/i.test(userAgent || "");
+}
+
+export function buildLineAppUrl(liffId, source) {
+  const query = source ? `?source=${encodeURIComponent(source)}` : "";
+  return `line://app/${liffId}${query}`;
+}
